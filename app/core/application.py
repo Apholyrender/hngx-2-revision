@@ -20,7 +20,7 @@ async def lifespan(api: FastAPI):
 def get_app():
     api = FastAPI(
         title="HNG X Person Routes",
-        description=("Dummy stuff"),
+        description=("Dummy stuff stuff"),
         version="0.0.1",
         lifespan=lifespan,
     )
