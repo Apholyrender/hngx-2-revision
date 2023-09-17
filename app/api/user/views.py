@@ -11,24 +11,26 @@ async def read_accounts(session: AnSession):
     user_services = UserService(session)
     return await user_services.get_all_users()
 
-@router.get("/user")
-async def read_an_account(session: AnSession, user_id: UUID = Query(..., alias="user_id")):
+@router.get("/{user_id}")
+async def read_an_account(session: AnSession, user_id: UUID ):
     user_services = UserService(session)
     return await user_services.get_single_user(user_id)
 
-@router.post("/")
+@router.post("/", status_code=201)
 async def create_account(request: Account, session: AnSession):
     user_services = UserService(session)
     return await user_services.create_user(request)
 
-@router.put("/user")
-async def update_account(request: Account, session: AnSession, user_id: UUID = Query(..., alias="user_id")):
+@router.put("/{user_id}")
+async def update_account(request: Account, session: AnSession, user_id: UUID ):
     user_services = UserService(session)
     return await user_services.update_user(user_id=user_id, user=request)
 
-@router.delete("/user")
-async def delete_account(session: AnSession, user_id: UUID = Query(..., alias="user_id")):
+@router.delete("/{user_id}")
+async def delete_account(session: AnSession, user_id: UUID ):
     user_services = UserService(session)
     await user_services.delete_user(user_id)
     return {"message": "User deleted Successfully"}
+
+
 
