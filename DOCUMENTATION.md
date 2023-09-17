@@ -1,228 +1,201 @@
 
-# API Documentation
+# Detailed API Documentation
 
-To test the API, you can use the following cURL commands. You can also use Postman or any other API testing tool.
+Test each API with the URL commands under each endpoint with Postman, ThunderClient, or any other API testing tool.
 
-------------------------------------------------------------------------------------------
 
-#### Create a user
+---------------------------------------------------------------------------------------------------------------------------------------------
+##### Endpoint 1: Get All User Accounts
 
-<details>
- <summary><code>POST</code> <code><b>/</b></code><code>api</code><code>(Create a person and store in a database)</code></summary>
+Description:
+    This endpoint retrieves a list of all user accounts.
 
-##### Parameters
+How the Endpoint Works:
+    When a GET request is sent to this endpoint, it queries the database to retrieve a list of all user accounts.
 
-> | name      |  type     | data type               | description                                                           |
-> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
-> | name      |  required | json(string)  |name of user  |
 
-##### Responses
+How to Call the Endpoint:
+    HTTP Method: GET
+    Endpoint Path: /api/
 
-> | http code     | content-type                      | response                                                            |
-> |---------------|-----------------------------------|---------------------------------------------------------------------|
-> | `200`         | `application/json`        | `{"name":<name stored>,"id":"user_id"}`     |
-> | `400`         | `application/json`         | `{"msg":"name already in use"}`    |
-> |`500` | `application/json` | `{"msg":"failed to create user"}` |
+Parameters for Calling the Endpoint:
+    None
 
-##### Example cURL
+Possible Responses from the Endpoint:
+    Status Code: 200 OK
+    Response Body: A list of user account profiles in JSON format.
 
-> ```javascript
->  curl -X POST -H "Content-Type: application/json" --data @post.json "http://localhost:8000/api"
-> ```
->
->```python
->import requests
->import json
->
->url = "http://localhost:8000/api"
->payload = {
->  "name": "test"
->}
->headers = {
->  'Content-Type': 'application/json'
->}
->
->response = requests.request("POST", url, headers=headers, data = json.dumps(payload))
->
->print(response.text.encode('utf8'))
+Possible Error Messages:
+    Status Code: 500 Internal Server Error
+    This could occur if there is an issue with the database connection.
 
-</details>
+Example cURL for the Endpoint:
 
-------------------------------------------------------------------------------------------
+curl -X GET "http://localhost:8000/api/"
 
-#### Get all users
 
-<details>
- <summary><code>GET</code> <code><b>/</b></code><code>api</code><code>(Get all persons from a database)</code></summary>
+-------------------------------------------------------------------------------------------------------------------------------------------------
+##### Endpoint 2: Get a Single User Account
 
-##### Parameters
+Description:
+    This endpoint retrieves information about a single user account by providing the user's unique identifier (user_id).
 
-> | name      |  type     | data type               | description                                                           |
-> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
-> | none      |  required | none  |none |
+How the Endpoint Works:
+    When a GET request is sent to this endpoint with a valid user_id, it queries the database to retrieve the details of the specified user.
 
-##### Responses
 
-> | http code     | content-type                      | response                                                            |
-> |---------------|-----------------------------------|---------------------------------------------------------------------|
-> | `200`         | `application/json`        | `list({"name":<name stored>,"id":"user_id"})`     |
-> | `404`         | `application/json`         | `{"msg":"no users found"}`    |
-> |`500` | `application/json` | `{"msg":"failed to get users"}` |
+How to Call the Endpoint:
+    HTTP Method: GET
+    Endpoint Path: /api/user
 
-##### Example cURL
 
-> ```javascript
->  curl -X GET -H "Content-Type: application/json" "http://localhost:8000/api"
-> ```
+Parameters for Calling the Endpoint:
+    user_id (Query Parameter, Required): The UUID of the user account you want to retrieve.
 
->```python
->import requests
->import json
->
->url = "http://localhost:8000/api"
->payload = {}
->headers = {
->  'Content-Type': 'application/json'
->}
->
->response = requests.request("GET", url, headers=headers, data = payload)
->
->print(response.text.encode('utf8'))
->```
 
-</details>
+Possible Responses from the Endpoint:
+    Status Code: 200 OK
+    Response Body: User account details in JSON format.
 
-------------------------------------------------------------------------------------------
 
-#### Get a user
+Possible Error Messages:
+    Status Code: 400 Bad Request
+    This could occur if the user_id parameter is missing or invalid.
+    Status Code: 404 Not Found
+    This could occur if the specified user is not found in the database.
+    Status Code: 500 Internal Server Error
+    This could occur if there is an issue with the database connection.
 
-<details>
- <summary><code>GET</code> <code><b>/</b></code><code>api/{idOrName}</code><code>(Get a person from a database)</code></summary>
 
-##### Parameters
+Example cURL for the Endpoint:
 
-> | name      |  type     | data type               | description                                                           |
-> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
-> | IdOrName      |  required | url(param)  |name or id of user |
->
 
-##### Responses
+curl -X GET "http://localhost:8000/api/user?user_id=put_user_id_here"
 
-> | http code     | content-type                      | response                                                            |
-> |---------------|-----------------------------------|---------------------------------------------------------------------|
-> | `201`         | `application/json`        | `{"name":<name stored>,"id":"user_id"}`     |
-> | `400`         | `application/json`                | `{"msg":"id or name is required"}`                            |
-> | `404`         | `application/json`         | `{"msg":"user not found"}`    |
- 
-##### Example cURL
 
-> ```javascript
->  curl -X GET -H "Content-Type: application/json" "http://localhost:8000/api/{idorname}"
-> ```
 
->```python
->import requests
->import json
->
->url = "http://localhost:8000/api/{idorname}"
->payload = {}
->headers = {
->  'Content-Type': 'application/json'
->}
->
->response = requests.request("GET", url, headers=headers, data = payload)
->
->print(response.text.encode('utf8'))
->```
+-------------------------------------------------------------------------------------------------------------------------------------------------
+##### Endpoint 3: Create a User Account
 
-</details>
+Description:
+    This endpoint allows the creation of a new user account by providing the necessary account information in the request body.
 
-------------------------------------------------------------------------------------------
+How the Endpoint Works:
+    When a POST request is sent to this endpoint with the required account details in the request body, it creates a new user account in the database.
 
-#### Update a user
 
-<details>
- <summary><code>PUT</code> <code><b>/</b></code><code>api/{idOrName}</code><code>(Update a person in a database)</code></summary>
+How to Call the Endpoint:
+    HTTP Method: POST
+    Endpoint Path: /api/
 
-##### Parameters
 
-> | name      |  type     | data type               | description                                                           |
-> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
-> | IdOrName      |  required | url(param)  |name or id of user |
-> | name      |  required | json(string)  |name of user  |
+Parameters for Calling the Endpoint:
+    Request Body: JSON object containing the user account details (e.g., username, email, password, etc.) as specified in the Account schema.
 
-##### Responses
 
-> | http code     | content-type                      | response                                                            |
-> |---------------|-----------------------------------|---------------------------------------------------------------------|
-> | `400`         | `application/json`         | `{"msg":"name already in use"}`    |
-> | `404`         | `application/json`         | `{"msg":"user not found"}`    |
-> |`500` | `application/json` | `{"msg":"failed to update user"}` |
+Possible Responses from the Endpoint:
+    Status Code: 201 Created
+    Response Body: The newly created user account profile in JSON format.
 
-##### Example cURL
 
-> ```javascript
->  curl -X PUT -H "Content-Type: application/json" --data @put.json "http://localhost:8000/api/{idorname}"
-> ```
+Possible Error Messages:
+    Status Code: 400 Bad Request
+    This could occur if the request body is missing or invalid.
+    Status Code: 500 Internal Server Error
+    This could occur if there is an issue with the database connection.
 
->```python
->import requests
->import json
->
->url = "http://localhost:8000/api/{idorname}"
->payload = {}
->headers = {
->  'Content-Type': 'application/json'
->}
->
->response = requests.request("PUT", url, headers=headers, data = payload)
->
->print(response.text.encode('utf8'))
->```
 
-</details>
+Example cURL for the Endpoint:
 
-------------------------------------------------------------------------------------------
+curl -X POST -H "Content-Type: application/json" -d '{
+  "username": "new_user",
+  "email": "new_user@example.com",
+  "password": "password123"
+}' "http://localhost:8000/api/"
 
-#### Delete a user
 
-<details>
- <summary><code>DELETE</code> <code><b>/</b></code><code>api/{idOrName}</code><code>(Delete a person from a database)</code></summary>
 
-##### Parameters
+-------------------------------------------------------------------------------------------------------------------------------------------------
+##### Endpoint 4: Update a User Account
 
-> | name      |  type     | data type               | description                                                           |
-> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
-> | IdOrName      |  required | url(param)  |name or id of user |
+Description:
+    This endpoint allows updating an existing user account by providing the user's unique identifier (user_id) and the updated account information in the request body.
 
-##### Responses
+How the Endpoint Works:
+    When a PUT request is sent to this endpoint with a valid user_id and the updated account details in the request body, it updates the user account in the database.
 
-> | http code     | content-type                      | response                                                            |
-> |---------------|-----------------------------------|---------------------------------------------------------------------|
-> | `204`         | `application/json`        | `{"msg":"user deleted"}`     |
-> | `404`         | `application/json`         | `{"msg":"user not found"}`    |
-> |`500` | `application/json` | `{"msg":"failed to delete user"}` |
 
-##### Example cURL
+How to Call the Endpoint:
+    HTTP Method: PUT
+    Endpoint Path: /api/user
 
-> ```javascript
->  curl -X DELETE -H "Content-Type: application/json" "http://localhost:8000/api/{idorname}"
-> ```
->```python
->import requests
->import json
->
->url = "http://localhost:8000/api/{idorname}"
->payload = {}
->headers = {
->  'Content-Type': 'application/json'
->}
->
->response = requests.request("DELETE", url, headers=headers, data = payload)
->
->print(response.text.encode('utf8'))
->```
 
-</details>
+Parameters for Calling the Endpoint:
+    user_id (Query Parameter, Required): The UUID of the user account you want to update.
+    Request Body: JSON object containing the updated user account details.
 
-------------------------------------------------------------------------------------------
+
+Possible Responses from the Endpoint:
+    Status Code: 200 OK
+    Response Body: The updated user account profile in JSON format.
+
+
+Possible Error Messages:
+    Status Code: 400 Bad Request
+    This could occur if the user_id parameter is missing or invalid, or if the request body is missing or invalid.
+    Status Code: 404 Not Found
+    This could occur if the specified user is not found in the database.
+    Status Code: 500 Internal Server Error
+    This could occur if there is an issue with the database connection.
+
+
+Example cURL for the Endpoint:
+
+curl -X PUT -H "Content-Type: application/json" -d '{
+  "username": "updated_user",
+  "email": "updated_user@example.com"
+}' 
+"http://localhost:8000/api/user?user_id=put_user_id_here"
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+##### Endpoint 5: Delete a User Account
+
+Description:
+    This endpoint allows the deletion of an existing user account by providing the user's unique identifier (user_id).
+
+How the Endpoint Works:
+    When a DELETE request is sent to this endpoint with a valid user_id, it deletes the specified user account from the database.
+
+
+How to Call the Endpoint:
+    HTTP Method: DELETE
+    Endpoint Path: /api/user
+
+
+Parameters for Calling the Endpoint:
+    user_id (Query Parameter, Required): The UUID of the user account you want to delete.
+
+
+Possible Responses from the Endpoint:
+    Status Code: 200 OK
+    Response Body: A message indicating the successful deletion of the user account.
+
+
+Possible Error Messages:
+    Status Code: 400 Bad Request
+    This could occur if the user_id parameter is missing or invalid.
+    Status Code: 404 Not Found
+    This could occur if the specified user is not found in the database.
+    Status Code: 500 Internal Server Error
+    This could occur if there is an issue with the database connection.
+    Example cURL for the Endpoint:
+
+
+curl -X DELETE "http://localhost:8000/api/user?user_id=put_user_id_here"
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
