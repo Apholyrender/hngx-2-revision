@@ -55,10 +55,20 @@ You can run a test uisng using local host:
 
 Click the **[link](https://github.com/Apholyrender/hngx-2-revision/blob/main/DOCUMENTATION.md)** to read the api documentation.
 
+
+I have provided E-R diagrams for a high-level flowchart of API endpoints, interactions with the database, error handling, and response handling. You can find the E-R diagrams in the link below.
+
+**[E-R Diagrams](https://drive.google.com/drive/folders/1zKCnxLs93sNTjjDFygSZXWQHX0J03nJU)**
+
+
 ## UML Diagrams
 
-We have provided UML diagrams for a visual representation of our application's structure. You can find the UML diagrams in the link below.
+I have provided UML diagrams for a visual representation of our application's structure. You can find the UML diagrams in the link below.
 
-**[UML Diagrams](https://drive.google.com/file/d/1OBUdOP8uOIFK4KRb7FYqgTAUAhnLNm6-/view?usp=sharing)**
+**[UML Diagrams](https://drive.google.com/drive/folders/1zKCnxLs93sNTjjDFygSZXWQHX0J03nJU)**
+
+## E-R Diagrams
+
+
 
 
